@@ -1,0 +1,85 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Feedback Serverless app
+
+Globals:
+  Function:
+    Runtime: java17
+    MemorySize: 512
+    Timeout: 30
+
+Resources:
+
+  ReceiveFeedbackFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: receiveFeedback
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+      CodeUri: target/feedback-serverless-1.0.0.jar
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /avaliacao
+            Method: post
+      Environment:
+        Variables:
+          FEEDBACK_TABLE: !Ref FeedbackTable
+          URGENCY_SNS_ARN: !Ref UrgencyTopic
+
+  GenerateWeeklyReportFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: generateWeeklyReport
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+      CodeUri: target/feedback-serverless-1.0.0.jar
+      Events:
+        WeeklySchedule:
+          Type: Schedule
+          Properties:
+            Schedule: "rate(7 days)" # ou cron para seg/horário específico
+      Environment:
+        Variables:
+          REPORTS_BUCKET: !Ref ReportsBucket
+
+  SendUrgencyAlertFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: sendUrgencyAlert
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+      CodeUri: target/feedback-serverless-1.0.0.jar
+      Environment:
+        Variables:
+          ADMIN_EMAIL: admin@exemplo.com
+      Events:
+        UrgencyTopic:
+          Type: SNS
+          Properties:
+            Topic: !Ref UrgencyTopic
+
+  UrgencyTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: urgency-topic
+
+  FeedbackTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: FeedbackTable
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  ReportsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${AWS::StackName}-reports-bucket"
+
+Outputs:
+  ApiUrl:
+    Description: "API Gateway URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
