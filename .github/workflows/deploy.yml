@@ -22,7 +22,6 @@ jobs:
         with:
           aws-region: sa-east-1
           role-to-assume: ${{ vars.AWS_ROLE_TO_ASSUME }}
-          role-session-name: gha-deploy
 
       - name: SAM deploy
         run: |
