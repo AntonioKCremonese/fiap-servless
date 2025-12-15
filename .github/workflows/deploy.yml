@@ -21,6 +21,12 @@ jobs:
       - name: Build with Maven
         run: mvn -B -DskipTests package
 
+      - name: Debug OIDC
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Ref: $GITHUB_REF"
+
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
