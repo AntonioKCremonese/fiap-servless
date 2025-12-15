@@ -15,7 +15,7 @@ Resources:
     Properties:
       FunctionName: receiveFeedback
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
-      CodeUri: target/feedback-serverless-1.0.0.jar
+      CodeUri: target/feedback-serverless.jar
       Events:
         Api:
           Type: Api
@@ -32,7 +32,7 @@ Resources:
     Properties:
       FunctionName: generateWeeklyReport
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
-      CodeUri: target/feedback-serverless-1.0.0.jar
+      CodeUri: target/feedback-serverless.jar
       Events:
         WeeklySchedule:
           Type: Schedule
@@ -47,7 +47,7 @@ Resources:
     Properties:
       FunctionName: sendUrgencyAlert
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
-      CodeUri: target/feedback-serverless-1.0.0.jar
+      CodeUri: target/feedback-serverless.jar
       Environment:
         Variables:
           ADMIN_EMAIL: tonhuk10@gmail.com
