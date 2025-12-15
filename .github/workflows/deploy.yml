@@ -25,6 +25,7 @@ jobs:
         run: |
           echo "Repository: $GITHUB_REPOSITORY"
           echo "Ref: $GITHUB_REF"
+          echo "Role: ${{ vars.AWS_ROLE_TO_ASSUME }}
 
 
       - name: Configure AWS credentials
