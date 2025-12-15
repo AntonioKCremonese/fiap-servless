@@ -21,11 +21,10 @@ jobs:
       - name: Build with Maven
         run: mvn -B -DskipTests package
 
-      - name: Debug OIDC
+      - name: List files in target folder
         run: |
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Ref: $GITHUB_REF"
-          echo "Role: ${{ vars.Region.AWS_ROLE_TO_ASSUME }}"
+          ls -la target/
+
 
 
       - name: Configure AWS credentials
