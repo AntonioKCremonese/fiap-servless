@@ -37,7 +37,7 @@ Resources:
         WeeklySchedule:
           Type: Schedule
           Properties:
-            Schedule: "rate(7 days)" # ou cron para seg/horário específico
+            Schedule: "rate(7 days)"
       Environment:
         Variables:
           REPORTS_BUCKET: !Ref ReportsBucket
@@ -50,7 +50,7 @@ Resources:
       CodeUri: target/feedback-serverless-1.0.0.jar
       Environment:
         Variables:
-          ADMIN_EMAIL: admin@exemplo.com
+          ADMIN_EMAIL: tonhuk10@gmail.com
       Events:
         UrgencyTopic:
           Type: SNS
