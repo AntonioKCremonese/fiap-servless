@@ -47,8 +47,6 @@
 
 
 	<dependencies>
-
-		<!-- OBRIGATÓRIO -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-function-adapter-aws</artifactId>
@@ -56,15 +54,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-function-web</artifactId>
-		</dependency>
-		<!-- CONTEXTO DAS FUNCTIONS -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-function-context</artifactId>
 		</dependency>
-
-		<!-- Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -75,8 +66,6 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-
-		<!-- AWS SDK v2 -->
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>dynamodb</artifactId>
@@ -113,41 +102,15 @@
 	</dependencies>
 
 	<build>
-		<finalName>feedback-serverless-aws</finalName>
+		<finalName>feedback-serverless</finalName>
 
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.5.1</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<createDependencyReducedPom>false</createDependencyReducedPom>
-					<shadedArtifactAttached>true</shadedArtifactAttached>
-					<shadedClassifierName>aws</shadedClassifierName>
-					<transformers>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-							<resource>META-INF/spring.handlers</resource>
-						</transformer>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-							<resource>META-INF/spring.schemas</resource>
-						</transformer>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-							<resource>META-INF/spring.factories</resource>
-						</transformer>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-							<resource>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</resource>
-						</transformer>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-					</transformers>
+					<layers enabled="false"/>
 				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
