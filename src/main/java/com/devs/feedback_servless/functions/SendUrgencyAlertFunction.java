@@ -35,5 +35,4 @@ public class SendUrgencyAlertFunction {
             sesClient.sendEmail(req);
         };
     }
-
 }
