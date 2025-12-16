@@ -15,7 +15,7 @@ Resources:
     Properties:
       FunctionName: receiveFeedback
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
-      CodeUri: target/feedback-serverless-jar-with-dependencies.jar
+      CodeUri: target/feedback-serverless.jar
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: receiveFeedback
@@ -34,7 +34,7 @@ Resources:
     Properties:
       FunctionName: generateWeeklyReport
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
-      CodeUri: target/feedback-serverless-jar-with-dependencies.jar
+      CodeUri: target/feedback-serverless.jar
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: generateWeeklyReport
@@ -50,7 +50,7 @@ Resources:
     Properties:
       FunctionName: sendUrgencyAlert
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
-      CodeUri: target/feedback-serverless-jar-with-dependencies.jar
+      CodeUri: target/feedback-serverless.jar
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: sendUrgencyAlert
