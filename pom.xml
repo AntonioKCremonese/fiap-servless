@@ -113,7 +113,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>feedback-serverless</finalName>
+		<finalName>feedback-serverless-aws</finalName>
 
 		<plugins>
 			<plugin>
