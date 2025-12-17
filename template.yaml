@@ -15,7 +15,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-http
-      Handler: com.devs.feedback_servless.handlers.StreamLambdaHandler::handleRequest
+      Handler: com.devs.feedback_servless.handlers.StreamLambdaHandler
       Events:
         Api:
           Type: Api

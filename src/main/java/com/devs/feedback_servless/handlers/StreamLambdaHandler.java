@@ -1,19 +1,31 @@
 package com.devs.feedback_servless.handlers;
 
+
+import com.amazonaws.serverless.exceptions.ContainerInitializationException;
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
+import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
+import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.devs.feedback_servless.FeedbackServlessApplication;
 
-public class StreamLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public class StreamLambdaHandler
+        implements RequestHandler<AwsProxyRequest, AwsProxyResponse> {
+
+    private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
+
+    static {
+        try {
+            handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(
+                    FeedbackServlessApplication.class
+            );
+        } catch (ContainerInitializationException e) {
+            throw new RuntimeException("Erro ao iniciar Spring", e);
+        }
+    }
 
     @Override
-    public APIGatewayProxyResponseEvent handleRequest(
-            APIGatewayProxyRequestEvent request,
-            Context context) {
-
-        return new APIGatewayProxyResponseEvent()
-                .withStatusCode(200)
-                .withBody("OK");
+    public AwsProxyResponse handleRequest(AwsProxyRequest request, Context context) {
+        return handler.proxy(request, context);
     }
 }
