@@ -1,5 +1,6 @@
 package com.devs.feedback_servless.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.Instant;
@@ -9,6 +10,7 @@ public class Feedback {
     private String id;
     private String descricao;
     private int nota;
+    @JsonIgnore
     private Instant dataEnvio;
     private boolean urgente;
 }
