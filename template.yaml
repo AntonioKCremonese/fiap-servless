@@ -1,89 +1,75 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Feedback Serverless app
+Description: Feedback Serverless App
 
 Globals:
   Function:
     Runtime: java17
     MemorySize: 512
     Timeout: 30
+    CodeUri: target/feedback-serverless.jar
 
 Resources:
 
-  ReceiveFeedbackFunction:
+  FeedbackHttpFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: receiveFeedback
-      Handler: com.devs.feedback_servless.StreamLambdaHandler::handleRequest
-      CodeUri: target/feedback-serverless.jar
-      Environment:
-        Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: receiveFeedback
-          FEEDBACK_TABLE: !Ref FeedbackTable
-          URGENCY_SNS_ARN: !Ref UrgencyTopic
+      FunctionName: feedback-http
+      Handler: com.devs.feedback_servless.handlers.StreamLambdaHandler::handleRequest
       Events:
         Api:
-          Type: HttpApi
+          Type: Api
           Properties:
             Path: /avaliacao
             Method: POST
-            PayloadFormatVersion: "2.0"
-
-  GenerateWeeklyReportFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: generateWeeklyReport
-      Handler: com.devs.feedback_servless.StreamLambdaHandler::handleRequest
-      CodeUri: target/feedback-serverless.jar
       Environment:
         Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: generateWeeklyReport
-          REPORTS_BUCKET: !Ref ReportsBucket
-      Events:
-        WeeklySchedule:
-          Type: Schedule
-          Properties:
-            Schedule: "rate(7 days)"
+          FEEDBACK_TABLE: !Ref FeedbackTable
+          URGENCY_SNS_ARN: !Ref UrgencyTopic
 
-  SendUrgencyAlertFunction:
+  UrgencyAlertFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: sendUrgencyAlert
-      Handler: com.devs.feedback_servless.StreamLambdaHandler::handleRequest
-      CodeUri: target/feedback-serverless.jar
-      Environment:
-        Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: sendUrgencyAlert
-          ADMIN_EMAIL: tonhuk10@gmail.com
+      FunctionName: feedback-urgency-alert
+      Handler: com.devs.feedback_servless.handlers.SnsUrgencyHandler::handleRequest
       Events:
         UrgencyTopic:
           Type: SNS
           Properties:
             Topic: !Ref UrgencyTopic
 
+  WeeklyReportFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: feedback-weekly-report
+      Handler: com.devs.feedback_servless.handlers.WeeklyReportHandler::handleRequest
+      Events:
+        WeeklySchedule:
+          Type: Schedule
+          Properties:
+            Schedule: "rate(7 days)"
+      Environment:
+        Variables:
+          REPORTS_BUCKET: !Ref ReportsBucket
+
   UrgencyTopic:
     Type: AWS::SNS::Topic
-    Properties:
-      TopicName: urgency-topic
 
   FeedbackTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: FeedbackTable
+      BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: S
       KeySchema:
         - AttributeName: id
           KeyType: HASH
-      BillingMode: PAY_PER_REQUEST
 
   ReportsBucket:
     Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub "${AWS::StackName}-reports-bucket"
 
 Outputs:
   ApiUrl:
-    Description: "API Gateway URL"
+    Description: API URL
     Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com"
