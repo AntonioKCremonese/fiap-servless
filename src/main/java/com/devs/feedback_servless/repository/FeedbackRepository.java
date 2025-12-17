@@ -1,4 +1,4 @@
-package com.devs.feedback_servless.service;
+package com.devs.feedback_servless.repository;
 
 import com.devs.feedback_servless.model.Feedback;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +34,4 @@ public class FeedbackRepository {
             throw new RuntimeException(e);
         }
     }
-
-    // métodos para consulta por data/urgência usados no relatório...
 }

@@ -1,5 +1,6 @@
 package com.devs.feedback_servless.service;
 
+import com.devs.feedback_servless.repository.FeedbackRepository;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;
 
@@ -21,6 +22,5 @@ public class ReportService {
         String content = "{ \"summary\": \"exemplo\" }"; // montar com reais cálculos
         s3.putObject(b -> b.bucket(bucketName).key(reportKey).build(),
                 software.amazon.awssdk.core.sync.RequestBody.fromString(content));
-        // publicar SNS para avisar admins (opcional)
     }
 }
