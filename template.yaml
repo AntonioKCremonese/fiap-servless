@@ -72,4 +72,4 @@ Resources:
 Outputs:
   ApiUrl:
     Description: API URL
-    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com"
