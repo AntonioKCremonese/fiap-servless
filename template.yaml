@@ -16,6 +16,13 @@ Resources:
     Properties:
       FunctionName: feedback-http
       Handler: com.devs.feedback_servless.handlers.StreamLambdaHandler
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+              Resource: !GetAtt FeedbackTable.Arn
       Events:
         Api:
           Type: Api
