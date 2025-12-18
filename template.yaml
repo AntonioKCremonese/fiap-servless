@@ -49,7 +49,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-weekly-report
-      Handler: com.devs.feedback_servless.handlers.WeeklyReportHandler::handleRequest
+      Handler: com.devs.feedback_servless.handlers.WeeklyReportHandler
       Events:
         WeeklySchedule:
           Type: Schedule
