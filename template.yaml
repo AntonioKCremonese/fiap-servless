@@ -59,6 +59,9 @@ Resources:
         Variables:
           SPRING_MAIN_WEB_APPLICATION_TYPE: none
           REPORTS_BUCKET: !Ref ReportsBucket
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref ReportsBucket
 
   UrgencyTopic:
     Type: AWS::SNS::Topic
