@@ -43,12 +43,12 @@ public class AwsClientConfig {
                 .build();
     }
 
-    @Bean
-    public ReportService reportService(
-            FeedbackRepository repository,
-            S3Client s3Client
-    ) {
-        return new ReportService(repository, s3Client);
-    }
+//    @Bean
+//    public ReportService reportService(
+//            FeedbackRepository repository,
+//            S3Client s3Client
+//    ) {
+//        return new ReportService(repository, s3Client);
+//    }
 }
 

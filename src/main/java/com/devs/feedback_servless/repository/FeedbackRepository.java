@@ -2,12 +2,13 @@ package com.devs.feedback_servless.repository;
 
 import com.devs.feedback_servless.model.Feedback;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 
-@Service
+@Repository
 public class FeedbackRepository {
 
     private final DynamoDbClient dynamo;
