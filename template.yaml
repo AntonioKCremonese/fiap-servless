@@ -57,6 +57,7 @@ Resources:
             Schedule: "rate(7 days)"
       Environment:
         Variables:
+          SPRING_MAIN_WEB_APPLICATION_TYPE: none
           REPORTS_BUCKET: !Ref ReportsBucket
 
   UrgencyTopic:
