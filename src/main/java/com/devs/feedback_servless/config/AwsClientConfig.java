@@ -1,5 +1,7 @@
 package com.devs.feedback_servless.config;
 
+import com.devs.feedback_servless.repository.FeedbackRepository;
+import com.devs.feedback_servless.service.ReportService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.regions.Region;
@@ -37,6 +39,14 @@ public class AwsClientConfig {
         return SesClient.builder()
                 .region(Region.of(System.getenv("AWS_REGION")))
                 .build();
+    }
+
+    @Bean
+    public ReportService reportService(
+            FeedbackRepository repository,
+            S3Client s3Client
+    ) {
+        return new ReportService(repository, s3Client);
     }
 }
 
