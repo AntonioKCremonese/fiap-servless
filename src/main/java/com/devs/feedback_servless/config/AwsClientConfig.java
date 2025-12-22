@@ -3,6 +3,7 @@ package com.devs.feedback_servless.config;
 import com.devs.feedback_servless.repository.FeedbackRepository;
 import com.devs.feedback_servless.service.ReportService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -11,6 +12,7 @@ import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.ses.SesClient;
 
 @Configuration
+@ComponentScan(basePackages = "com.devs.feedback_servless")
 public class AwsClientConfig {
 
     @Bean
