@@ -15,7 +15,7 @@ Resources:
     Properties:
       FunctionName: feedback-http
       CodeUri: feedback-api/target/feedback-api-1.0.0.jar
-      Handler: com.devs.feedback_servless.handler.FeedbackHandler
+      Handler: com.devs.feedback.handler.FeedbackHandler
       Policies:
         - Version: "2012-10-17"
           Statement:
@@ -39,7 +39,7 @@ Resources:
     Properties:
       FunctionName: feedback-urgency-alert
       CodeUri: feedback-sns/target/feedback-sns-1.0.0.jar
-      Handler: com.devs.feedback_servless.handler.SnsUrgencyHandler::handleRequest
+      Handler: com.devs.feedback.handler.SnsUrgencyHandler::handleRequest
       Events:
         UrgencyTopic:
           Type: SNS
@@ -51,7 +51,7 @@ Resources:
     Properties:
       FunctionName: feedback-weekly-report
       CodeUri: feedback-schedule/target/feedback-schedule-1.0.0.jar
-      Handler: com.devs.feedback_servless.handler.WeeklyReportHandler
+      Handler: com.devs.feedback.handler.WeeklyReportHandler
       Events:
         WeeklySchedule:
           Type: Schedule
