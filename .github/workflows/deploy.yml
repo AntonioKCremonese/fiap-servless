@@ -23,7 +23,12 @@ jobs:
 
       - name: List files in target folder
         run: |
-          ls -la target/
+          echo "API:"
+          ls -la feedback-api/target
+          echo "SCHEDULER:"
+          ls -la feedback-scheduler/target
+          echo "SNS:"
+          ls -la feedback-sns/target
 
 
 
