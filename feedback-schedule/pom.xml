@@ -12,7 +12,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>feedback-scheduler</artifactId>
+    <artifactId>feedback-schedule</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -22,13 +22,6 @@
             <artifactId>feedback-core</artifactId>
             <version>1.0.0</version>
         </dependency>
-
-        <!-- Lambda Core -->
-<!--        <dependency>-->
-<!--            <groupId>com.amazonaws</groupId>-->
-<!--            <artifactId>aws-lambda-java-core</artifactId>-->
-<!--            <version>${aws.sdk.version}</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>com.amazonaws</groupId>
