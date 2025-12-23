@@ -7,7 +7,6 @@ Globals:
     Runtime: java17
     MemorySize: 512
     Timeout: 30
-    CodeUri: target/feedback-serverless.jar
 
 Resources:
 
@@ -15,7 +14,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-http
-      Handler: com.devs.feedback_servless.handlers.StreamLambdaHandler
+      CodeUri: feedback-api/target/feedback-api-1.0.0.jar
+      Handler: com.devs.feedback_servless.handler.FeedbackHandler
       Policies:
         - Version: "2012-10-17"
           Statement:
@@ -38,7 +38,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-urgency-alert
-      Handler: com.devs.feedback_servless.handlers.SnsUrgencyHandler::handleRequest
+      CodeUri: feedback-sns/target/feedback-sns-1.0.0.jar
+      Handler: com.devs.feedback_servless.handler.SnsUrgencyHandler::handleRequest
       Events:
         UrgencyTopic:
           Type: SNS
@@ -49,7 +50,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-weekly-report
-      Handler: com.devs.feedback_servless.handlers.WeeklyReportHandler
+      CodeUri: feedback-schedule/target/feedback-schedule-1.0.0.jar
+      Handler: com.devs.feedback_servless.handler.WeeklyReportHandler
       Events:
         WeeklySchedule:
           Type: Schedule
