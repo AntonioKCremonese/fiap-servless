@@ -26,7 +26,7 @@ jobs:
           echo "API:"
           ls -la feedback-api/target
           echo "SCHEDULER:"
-          ls -la feedback-scheduler/target
+          ls -la feedback-schedule/target
           echo "SNS:"
           ls -la feedback-sns/target
 
