@@ -14,15 +14,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-http
-      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
-      CodeUri: feedback-api
-      Policies:
-        - Version: "2012-10-17"
-          Statement:
-            - Effect: Allow
-              Action:
-                - dynamodb:PutItem
-              Resource: !GetAtt FeedbackTable.Arn
+      Runtime: java17
+      CodeUri: .
+      Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
       Events:
         Api:
           Type: Api
@@ -33,25 +27,37 @@ Resources:
         Variables:
           FEEDBACK_TABLE: !Ref FeedbackTable
           URGENCY_SNS_ARN: !Ref UrgencyTopic
+    Metadata:
+      BuildMethod: java
+      BuildProperties:
+        MavenArgs: -pl feedback-api -am -DskipTests
+
 
   UrgencyAlertFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-urgency-alert
-      CodeUri: feedback-sns/target/feedback-sns-1.0.0.jar
+      Runtime: java17
+      CodeUri: .
       Handler: com.devs.feedback.handler.SnsUrgencyHandler::handleRequest
       Events:
         UrgencyTopic:
           Type: SNS
           Properties:
             Topic: !Ref UrgencyTopic
+    Metadata:
+      BuildMethod: java
+      BuildProperties:
+        MavenArgs: -pl feedback-sns -am -DskipTests
+
 
   WeeklyReportFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-weekly-report
-      CodeUri: feedback-schedule/target/feedback-schedule-1.0.0.jar
-      Handler: com.devs.feedback.handler.WeeklyReportHandler
+      Runtime: java17
+      CodeUri: .
+      Handler: com.devs.feedback.handler.WeeklyReportHandler::handleRequest
       Events:
         WeeklySchedule:
           Type: Schedule
@@ -64,6 +70,11 @@ Resources:
       Policies:
         - S3WritePolicy:
             BucketName: !Ref ReportsBucket
+    Metadata:
+      BuildMethod: java
+      BuildProperties:
+        MavenArgs: -pl feedback-schedule -am -DskipTests
+
 
   UrgencyTopic:
     Type: AWS::SNS::Topic
