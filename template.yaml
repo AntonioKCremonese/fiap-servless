@@ -15,7 +15,7 @@ Resources:
     Properties:
       FunctionName: feedback-http
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
-      CodeUri: feedback-api/target/
+      CodeUri: feedback-api
       Policies:
         - Version: "2012-10-17"
           Statement:
