@@ -38,6 +38,9 @@ jobs:
           aws-region: sa-east-1
           role-to-assume: arn:aws:iam::722318517834:role/github-actions-deploy
 
+      - name: SAM build
+        run: sam build
+
       - name: SAM deploy
         run: |
           pip install aws-sam-cli
