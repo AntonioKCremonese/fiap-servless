@@ -28,7 +28,7 @@ Resources:
           FEEDBACK_TABLE: !Ref FeedbackTable
           URGENCY_SNS_ARN: !Ref UrgencyTopic
     Metadata:
-      BuildMethod: java
+      BuildMethod: maven
       BuildProperties:
         MavenArgs: -pl feedback-api -am -DskipTests
 
@@ -46,7 +46,7 @@ Resources:
           Properties:
             Topic: !Ref UrgencyTopic
     Metadata:
-      BuildMethod: java
+      BuildMethod: maven
       BuildProperties:
         MavenArgs: -pl feedback-sns -am -DskipTests
 
@@ -71,7 +71,7 @@ Resources:
         - S3WritePolicy:
             BucketName: !Ref ReportsBucket
     Metadata:
-      BuildMethod: java
+      BuildMethod: maven
       BuildProperties:
         MavenArgs: -pl feedback-schedule -am -DskipTests
 
