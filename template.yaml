@@ -14,8 +14,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: feedback-http
-      CodeUri: feedback-api/target/feedback-api-1.0.0.jar
-      Handler: com.devs.feedback.handler.StreamLambdaHandler
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+      CodeUri: feedback-api/target/
       Policies:
         - Version: "2012-10-17"
           Statement:
