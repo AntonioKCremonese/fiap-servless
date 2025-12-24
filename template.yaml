@@ -15,7 +15,7 @@ Resources:
     Properties:
       FunctionName: feedback-http
       Runtime: java17
-      CodeUri: .
+      CodeUri: feedback-api
       Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
       Events:
         Api:
@@ -27,10 +27,6 @@ Resources:
         Variables:
           FEEDBACK_TABLE: !Ref FeedbackTable
           URGENCY_SNS_ARN: !Ref UrgencyTopic
-    Metadata:
-      BuildProperties:
-        MavenArgs: -pl feedback-api -am -DskipTests
-        ArtifactName: feedback-api-1.0.0.jar
 
 
   UrgencyAlertFunction:
@@ -45,10 +41,6 @@ Resources:
           Type: SNS
           Properties:
             Topic: !Ref UrgencyTopic
-    Metadata:
-      BuildProperties:
-        MavenArgs: -pl feedback-sns -am -DskipTests
-        ArtifactName: feedback-sns-1.0.0.jar
 
 
   WeeklyReportFunction:
@@ -70,10 +62,6 @@ Resources:
       Policies:
         - S3WritePolicy:
             BucketName: !Ref ReportsBucket
-    Metadata:
-      BuildProperties:
-        MavenArgs: -pl feedback-schedule -am -DskipTests
-        ArtifactName: feedback-schedule-1.0.0.jar
 
 
   UrgencyTopic:
