@@ -30,6 +30,7 @@ Resources:
     Metadata:
       BuildProperties:
         MavenArgs: -pl feedback-api -am -DskipTests
+        ArtifactName: feedback-api-1.0.0.jar
 
 
   UrgencyAlertFunction:
@@ -47,6 +48,7 @@ Resources:
     Metadata:
       BuildProperties:
         MavenArgs: -pl feedback-sns -am -DskipTests
+        ArtifactName: feedback-sns-1.0.0.jar
 
 
   WeeklyReportFunction:
@@ -71,6 +73,7 @@ Resources:
     Metadata:
       BuildProperties:
         MavenArgs: -pl feedback-schedule -am -DskipTests
+        ArtifactName: feedback-schedule-1.0.0.jar
 
 
   UrgencyTopic:
