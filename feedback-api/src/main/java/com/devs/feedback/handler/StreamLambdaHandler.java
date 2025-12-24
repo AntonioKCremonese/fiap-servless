@@ -8,7 +8,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.devs.feedback.ApiApplication;
 
-public class FeedbackHandler implements RequestHandler<AwsProxyRequest, AwsProxyResponse> {
+public class StreamLambdaHandler implements RequestHandler<AwsProxyRequest, AwsProxyResponse> {
 
     private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
 
