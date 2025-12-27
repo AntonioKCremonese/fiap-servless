@@ -23,10 +23,6 @@ Resources:
           Properties:
             Path: /avaliacao
             Method: POST
-    Metadata:
-      BuildProperties:
-        MavenArgs: -pl feedback-api -am -DskipTests
-
 
   UrgencyAlertFunction:
     Type: AWS::Serverless::Function

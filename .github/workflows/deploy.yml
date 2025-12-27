@@ -30,18 +30,11 @@ jobs:
           echo "SNS:"
           ls -la feedback-sns/target
 
-
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-region: sa-east-1
           role-to-assume: arn:aws:iam::722318517834:role/github-actions-deploy
-
-      - name: SAM build
-        run: |
-          rm -rf .aws-sam
-          sam build
 
       - name: SAM deploy
         run: |
