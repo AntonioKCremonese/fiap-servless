@@ -31,7 +31,7 @@ public class FeedbackService {
         feedback.setUrgente(feedback.getNota() <= 3);
 
         repo.save(feedback);
-
+        log.info("feedback urgente? {}", feedback.isUrgente());
         if (feedback.isUrgente()) {
             log.info("Enviando alerta SNS para feedback urgente: {}", feedback);
             snsClient.publish(PublishRequest.builder()
