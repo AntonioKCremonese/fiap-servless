@@ -16,7 +16,7 @@ Resources:
       FunctionName: feedback-http
       Runtime: java17
       CodeUri: .
-      Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
+      Handler: com.devs.feedback.handler.StreamLambdaHandler
       Events:
         Api:
           Type: Api
