@@ -12,7 +12,7 @@ public class SendUrgencyAlertService {
 
     public SendUrgencyAlertService(SesClient sesClient) {
         this.sesClient = sesClient;
-        this.adminEmail = System.getenv("ADMIN_EMAIL");
+        this.adminEmail = System.getenv("SES_SOURCE_EMAIL");
     }
 
     public void send(String message) {

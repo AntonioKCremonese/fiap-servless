@@ -31,6 +31,9 @@ Resources:
       Runtime: java17
       CodeUri: feedback-sns/target/feedback-sns-1.0.0.jar
       Handler: com.devs.feedback.handler.SnsUrgencyHandler::handleRequest
+      Environment:
+        Variables:
+          SES_SOURCE_EMAIL: tonhuk10@gmail.com
       Events:
         UrgencyTopic:
           Type: SNS
