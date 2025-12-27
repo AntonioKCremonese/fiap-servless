@@ -15,7 +15,7 @@ Resources:
     Properties:
       FunctionName: feedback-http
       Runtime: java17
-      CodeUri: .
+      CodeUri: feedback-api/target/feedback-api-1.0.0.jar
       Handler: com.devs.feedback.handler.StreamLambdaHandler
       Events:
         Api:
