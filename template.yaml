@@ -29,14 +29,13 @@ Resources:
     Properties:
       FunctionName: feedback-urgency-alert
       Runtime: java17
-      CodeUri: .
+      CodeUri: feedback-api/target/feedback-sns-1.0.0.jar
       Handler: com.devs.feedback.handler.SnsUrgencyHandler::handleRequest
       Events:
         UrgencyTopic:
           Type: SNS
           Properties:
             Topic: !Ref UrgencyTopic
-
 
   WeeklyReportFunction:
     Type: AWS::Serverless::Function
