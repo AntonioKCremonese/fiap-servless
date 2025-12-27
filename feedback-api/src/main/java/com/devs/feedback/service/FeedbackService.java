@@ -23,6 +23,7 @@ public class FeedbackService {
     }
 
     public void process(Feedback feedback) {
+        log.info("feedback: {}", feedback);
         if (feedback.getNota() < 0 || feedback.getNota() > 10) {
             throw new IllegalArgumentException("Nota fora do intervalo 0-10");
         }

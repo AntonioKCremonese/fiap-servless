@@ -7,7 +7,9 @@ import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.devs.feedback.ApiApplication;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class StreamLambdaHandler implements RequestHandler<AwsProxyRequest, AwsProxyResponse> {
 
     private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
@@ -24,6 +26,7 @@ public class StreamLambdaHandler implements RequestHandler<AwsProxyRequest, AwsP
 
     @Override
     public AwsProxyResponse handleRequest(AwsProxyRequest request, Context context) {
+        log.info("handle feedback: {}", request);
         return handler.proxy(request, context);
     }
 
