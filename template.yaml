@@ -15,7 +15,6 @@ Resources:
     Properties:
       FunctionName: feedback-http
       Runtime: java17
-      PackageType: Zip
       CodeUri: feedback-api/target
       Handler: com.devs.feedback.handler.StreamLambdaHandler
       Events:
