@@ -39,7 +39,7 @@ jobs:
           role-to-assume: arn:aws:iam::722318517834:role/github-actions-deploy
 
       - name: SAM build
-        run: sam build
+        run: sam build --clean
 
       - name: SAM deploy
         run: |

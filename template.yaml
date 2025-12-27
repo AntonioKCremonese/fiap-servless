@@ -24,7 +24,6 @@ Resources:
             Path: /avaliacao
             Method: POST
     Metadata:
-      BuildMethod: java
       BuildProperties:
         MavenArgs: -pl feedback-api -am -DskipTests
 
