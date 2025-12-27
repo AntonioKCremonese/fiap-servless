@@ -24,10 +24,10 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!-- Spring Boot Web -->
+        <!-- Spring Boot Webflux -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
         <!-- AWS Lambda HTTP Container -->
