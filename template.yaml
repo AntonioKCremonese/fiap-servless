@@ -46,7 +46,9 @@ Resources:
               Action:
                 - ses:SendEmail
                 - ses:SendRawEmail
-              Resource: arn:aws:ses:sa-east-1:722318517834:identity/tonhuk10@gmail.com
+              Resource:
+                - arn:aws:ses:sa-east-1:722318517834:identity/tonhuk10@gmail.com
+                - arn:aws:ses:sa-east-1:722318517834:configuration-set/my-first-configuration-set
 
   WeeklyReportFunction:
     Type: AWS::Serverless::Function
