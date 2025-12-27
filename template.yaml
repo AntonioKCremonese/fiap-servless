@@ -39,6 +39,14 @@ Resources:
           Type: SNS
           Properties:
             Topic: !Ref UrgencyTopic
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+              Resource: arn:aws:ses:sa-east-1:722318517834:identity/tonhuk10@gmail.com
 
   WeeklyReportFunction:
     Type: AWS::Serverless::Function

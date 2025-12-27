@@ -2,6 +2,7 @@ package com.devs.feedback.service;
 
 import com.devs.feedback.model.Feedback;
 import com.devs.feedback.repository.FeedbackRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
@@ -9,6 +10,7 @@ import software.amazon.awssdk.services.sns.model.PublishRequest;
 import java.time.Instant;
 
 @Service
+@Slf4j
 public class FeedbackService {
 
     private final FeedbackRepository repo;
@@ -31,6 +33,7 @@ public class FeedbackService {
         repo.save(feedback);
 
         if (feedback.isUrgente()) {
+            log.info("Enviando alerta SNS para feedback urgente: {}", feedback);
             snsClient.publish(PublishRequest.builder()
                     .topicArn(snsTopicArn)
                     .subject("Alerta de feedback urgente")
