@@ -15,7 +15,7 @@ Resources:
     Properties:
       FunctionName: feedback-http
       Runtime: java17
-      CodeUri: feedback-api
+      CodeUri: .
       Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
       Events:
         Api:
@@ -23,10 +23,10 @@ Resources:
           Properties:
             Path: /avaliacao
             Method: POST
-      Environment:
-        Variables:
-          FEEDBACK_TABLE: !Ref FeedbackTable
-          URGENCY_SNS_ARN: !Ref UrgencyTopic
+    Metadata:
+      BuildMethod: java
+      BuildProperties:
+        MavenArgs: -pl feedback-api -am -DskipTests
 
 
   UrgencyAlertFunction:
