@@ -13,7 +13,7 @@ public class SnsUrgencyHandler implements RequestHandler<SNSEvent, Void> {
     private static final SendUrgencyAlertService service;
 
     static {
-        context = new AnnotationConfigApplicationContext(AwsClientConfig.class);
+        context = new AnnotationConfigApplicationContext("com.devs.feedback");
         service = context.getBean(SendUrgencyAlertService.class);
     }
 
