@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: Build with Maven
-        run: mvn -B -DskipTests package
+        run: mvn clean -B -DskipTests package
 
       - name: List files in target folder
         run: |
