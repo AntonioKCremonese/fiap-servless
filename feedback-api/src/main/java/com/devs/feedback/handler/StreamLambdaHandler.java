@@ -1,20 +1,20 @@
 package com.devs.feedback.handler;
 
 import com.amazonaws.serverless.exceptions.ContainerInitializationException;
-import com.amazonaws.serverless.proxy.*;
-import com.amazonaws.serverless.proxy.internal.servlet.AwsHttpServletResponse;
 import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
 import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.devs.feedback.ApiApplication;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.WebApplicationType;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 @Slf4j
-public class StreamLambdaHandler extends SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> {
+public class StreamLambdaHandler implements RequestStreamHandler {
 
     private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
 
@@ -28,14 +28,9 @@ public class StreamLambdaHandler extends SpringBootLambdaContainerHandler<AwsPro
         }
     }
 
-    public StreamLambdaHandler(Class<AwsProxyRequest> awsProxyRequestClass, Class<AwsProxyResponse> awsProxyResponseClass, RequestReader<AwsProxyRequest, HttpServletRequest> requestReader, ResponseWriter<AwsHttpServletResponse, AwsProxyResponse> responseWriter, SecurityContextWriter<AwsProxyRequest> securityContextWriter, ExceptionHandler<AwsProxyResponse> exceptionHandler, Class<?> springBootInitializer, InitializationWrapper init, WebApplicationType applicationType) {
-        super(awsProxyRequestClass, awsProxyResponseClass, requestReader, responseWriter, securityContextWriter, exceptionHandler, springBootInitializer, init, applicationType);
+    @Override
+    public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
+        log.info("handle feedback: {}", inputStream);
+        handler.proxyStream(inputStream, outputStream, context);
     }
-
-//    @Override
-//    public AwsProxyResponse handleRequest(AwsProxyRequest request, Context context) {
-//        log.info("handle feedback: {}", request);
-//        return handler.proxy(request, context);
-//    }
-
 }
