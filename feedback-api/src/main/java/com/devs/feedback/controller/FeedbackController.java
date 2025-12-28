@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/avaliacao")
@@ -21,17 +20,17 @@ public class FeedbackController {
         this.service = service;
     }
 
-//    @PostMapping
-//    public ResponseEntity<String> create(@RequestBody Feedback feedback) {
-//        log.info("Received feedback: {}", feedback);
-//        service.process(feedback);
-//        return ResponseEntity.ok("OK");
-//    }
-
     @PostMapping
-    public Mono<ResponseEntity<String>> create(@RequestBody Mono<Feedback> feedback) {
+    public ResponseEntity<String> create(@RequestBody Feedback feedback) {
         log.info("Received feedback: {}", feedback);
-        return feedback.doOnNext(service::process)
-                .map(f -> ResponseEntity.ok("OK"));
+        service.process(feedback);
+        return ResponseEntity.ok("OK");
     }
+
+//    @PostMapping
+//    public Mono<ResponseEntity<String>> create(@RequestBody Mono<Feedback> feedback) {
+//        log.info("Received feedback: {}", feedback);
+//        return feedback.doOnNext(service::process)
+//                .map(f -> ResponseEntity.ok("OK"));
+//    }
 }
