@@ -16,6 +16,7 @@
 		<module>feedback-api</module>
 		<module>feedback-schedule</module>
 		<module>feedback-sns</module>
+		<module>feedback-api-function</module>
 	</modules>
 
 	<properties>
