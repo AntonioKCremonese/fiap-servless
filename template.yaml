@@ -17,6 +17,9 @@ Resources:
       Runtime: java17
       CodeUri: feedback-api-function/target/feedback-api-function-1.0.0.jar
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: hello
       Events:
         Api:
           Type: Api
