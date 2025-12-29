@@ -27,7 +27,8 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-events</artifactId>
-            <version>${aws.lambda.version}</version>
+            <version>3.11.5</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Spring Context -->
