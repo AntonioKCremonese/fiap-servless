@@ -23,7 +23,6 @@ Resources:
       Environment:
         Variables:
           DYNAMODB_TABLE_NAME: !Ref FeedbackTable
-          AWS_REGION: !Ref AWS::Region
           URGENCY_SNS_ARN: !Ref UrgencyTopic
       Policies:
         - DynamoDBCrudPolicy:
