@@ -78,9 +78,12 @@ Resources:
         Variables:
           SPRING_MAIN_WEB_APPLICATION_TYPE: none
           REPORTS_BUCKET: !Ref ReportsBucket
+          DYNAMODB_TABLE_NAME: !Ref FeedbackTable
       Policies:
         - S3WritePolicy:
             BucketName: !Ref ReportsBucket
+        - DynamoDBReadPolicy:
+            TableName: !Ref FeedbackTable
 
 
   UrgencyTopic:
