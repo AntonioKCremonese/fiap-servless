@@ -19,20 +19,25 @@ Resources:
         Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
         MemorySize: 512
         Timeout: 30
-        Environment:
-          Variables:
-            DYNAMODB_TABLE_NAME: !Ref FeedbackTable
-        Policies:
-          - DynamoDBCrudPolicy:
-              TableName: !Ref FeedbackTable
-          - SNSPublishMessagePolicy:
-              TopicName: !GetAtt UrgencyTopic.TopicName
-        Events:
-          ApiRoot:
-            Type: Api
-            Properties:
-              Path: /avaliacao
-              Method: ANY
+        SnapStart:
+          ApplyOn: PublishedVersions
+          AutoPublishAlias: live
+          Environment:
+            Variables:
+              DYNAMODB_TABLE_NAME: !Ref FeedbackTable
+              AWS_REGION: !Ref AWS::Region
+              URGENCY_SNS_ARN: !Ref UrgencyTopic
+          Policies:
+            - DynamoDBCrudPolicy:
+                TableName: !Ref FeedbackTable
+            - SNSPublishMessagePolicy:
+                TopicName: !GetAtt UrgencyTopic.TopicName
+          Events:
+            ApiRoot:
+              Type: Api
+              Properties:
+                Path: /avaliacao
+                Method: POST
 
   UrgencyAlertFunction:
     Type: AWS::Serverless::Function
@@ -86,6 +91,7 @@ Resources:
 
   FeedbackTable:
     Type: AWS::DynamoDB::Table
+    TableName: feedback-table
     Properties:
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:

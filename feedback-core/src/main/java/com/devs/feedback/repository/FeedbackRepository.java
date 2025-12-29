@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 public class FeedbackRepository {
 
     private final DynamoDbClient dynamo;
-    private final String tableName = System.getenv("FEEDBACK_TABLE");
+    private final String tableName = System.getenv("DYNAMODB_TABLE_NAME");
     private final ObjectMapper mapper = new ObjectMapper();
 
     public FeedbackRepository(DynamoDbClient dynamo) { this.dynamo = dynamo; }

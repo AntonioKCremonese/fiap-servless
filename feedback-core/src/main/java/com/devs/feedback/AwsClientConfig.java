@@ -10,7 +10,7 @@ import software.amazon.awssdk.services.ses.SesClient;
 import software.amazon.awssdk.services.sns.SnsClient;
 
 @Configuration
-@ComponentScan(basePackages = "com.devs.feedback_servless")
+@ComponentScan(basePackages = "com.devs.feedback")
 public class AwsClientConfig {
 
     @Bean
