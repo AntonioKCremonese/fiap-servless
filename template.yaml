@@ -13,16 +13,26 @@ Resources:
   FeedbackHttpFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: feedback-http
-      Runtime: java17
-      CodeUri: feedback-api/target/feedback-api-1.0.0.jar
-      Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /avaliacao
-            Method: POST
+        FunctionName: feedback-api
+        Runtime: java17
+        CodeUri: feedback-api/target/feedback-api-1.0.0.jar
+        Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
+        MemorySize: 512
+        Timeout: 30
+        Environment:
+          Variables:
+            DYNAMODB_TABLE_NAME: !Ref FeedbackTable
+        Policies:
+          - DynamoDBCrudPolicy:
+              TableName: !Ref FeedbackTable
+          - SNSPublishMessagePolicy:
+              TopicName: !GetAtt UrgencyTopic.TopicName
+        Events:
+          ApiRoot:
+            Type: Api
+            Properties:
+              Path: /{proxy+}
+              Method: ANY
 
   UrgencyAlertFunction:
     Type: AWS::Serverless::Function
