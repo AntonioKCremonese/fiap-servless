@@ -13,31 +13,29 @@ Resources:
   FeedbackHttpFunction:
     Type: AWS::Serverless::Function
     Properties:
-        FunctionName: feedback-api
-        Runtime: java17
-        CodeUri: feedback-api/target/feedback-api-1.0.0.jar
-        Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
-        MemorySize: 512
-        Timeout: 30
-        SnapStart:
-          ApplyOn: PublishedVersions
-          AutoPublishAlias: live
-          Environment:
-            Variables:
-              DYNAMODB_TABLE_NAME: !Ref FeedbackTable
-              AWS_REGION: !Ref AWS::Region
-              URGENCY_SNS_ARN: !Ref UrgencyTopic
-          Policies:
-            - DynamoDBCrudPolicy:
-                TableName: !Ref FeedbackTable
-            - SNSPublishMessagePolicy:
-                TopicName: !GetAtt UrgencyTopic.TopicName
-          Events:
-            ApiRoot:
-              Type: Api
-              Properties:
-                Path: /avaliacao
-                Method: POST
+      FunctionName: feedback-api
+      Runtime: java17
+      CodeUri: feedback-api/target/feedback-api-1.0.0.jar
+      Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
+      SnapStart:
+        ApplyOn: PublishedVersions
+      AutoPublishAlias: live
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: !Ref FeedbackTable
+          AWS_REGION: !Ref AWS::Region
+          URGENCY_SNS_ARN: !Ref UrgencyTopic
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref FeedbackTable
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt UrgencyTopic.TopicName
+      Events:
+        ApiRoot:
+          Type: Api
+          Properties:
+            Path: /avaliacao
+            Method: POST
 
   UrgencyAlertFunction:
     Type: AWS::Serverless::Function
@@ -91,8 +89,8 @@ Resources:
 
   FeedbackTable:
     Type: AWS::DynamoDB::Table
-    TableName: feedback-table
     Properties:
+      TableName: feedback-table
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: id
