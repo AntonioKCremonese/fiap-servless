@@ -67,7 +67,7 @@ Resources:
     Properties:
       FunctionName: feedback-weekly-report
       Runtime: java17
-      CodeUri: .
+      CodeUri: feedback-schedule/target/feedback-schedule-1.0.0.jar
       Handler: com.devs.feedback.handler.WeeklyReportHandler::handleRequest
       Events:
         WeeklySchedule:
