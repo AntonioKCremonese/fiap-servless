@@ -20,6 +20,7 @@ Resources:
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: hello
+          MAIN_CLASS: com.devs.feedback.ApiApplication
       Events:
         Api:
           Type: Api
