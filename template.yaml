@@ -15,12 +15,8 @@ Resources:
     Properties:
       FunctionName: feedback-http
       Runtime: java17
-      CodeUri: feedback-api-function/target/feedback-api-function-1.0.0-aws.jar
-      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
-      Environment:
-        Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: hello
-          MAIN_CLASS: com.devs.feedback.ApiApplication
+      CodeUri: feedback-api/target/feedback-api-1.0.0.jar
+      Handler: com.devs.feedback.handler.StreamLambdaHandler::handleRequest
       Events:
         Api:
           Type: Api
