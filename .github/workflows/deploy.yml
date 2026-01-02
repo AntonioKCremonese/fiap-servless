@@ -36,6 +36,10 @@ jobs:
           aws-region: sa-east-1
           role-to-assume: arn:aws:iam::722318517834:role/github-actions-deploy
 
+      - name: Debug secret
+        run: |
+          echo "SES is: '${{ secrets.SES_SOURCE_EMAIL }}'"
+
       - name: SAM deploy
         run: |
           pip install aws-sam-cli
