@@ -52,5 +52,4 @@ jobs:
             --no-fail-on-empty-changeset \
             --resolve-s3 \
             --parameter-overrides \
-              SesSourceEmail=${{ secrets.SES_SOURCE_EMAIL }} \
-              SesConfigurationSetName=${{ secrets.SES_CONFIG_SET_NAME }}
+              SesSourceEmail=${{ secrets.SES_SOURCE_EMAIL }}

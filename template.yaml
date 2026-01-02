@@ -94,7 +94,6 @@ Resources:
         - DynamoDBReadPolicy:
             TableName: !Ref FeedbackTable
 
-
   UrgencyTopic:
     Type: AWS::SNS::Topic
 
