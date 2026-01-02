@@ -3,7 +3,6 @@ package com.devs.feedback.handler;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.SNSEvent;
-import com.devs.feedback.AwsClientConfig;
 import com.devs.feedback.service.SendUrgencyAlertService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

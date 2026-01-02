@@ -24,13 +24,6 @@ public class FeedbackController {
     public ResponseEntity<String> create(@RequestBody Feedback feedback) {
         log.info("Received feedback: {}", feedback);
         service.process(feedback);
-        return ResponseEntity.ok("OK");
+        return ResponseEntity.ok("Feedback recebido com sucesso");
     }
-
-//    @PostMapping
-//    public Mono<ResponseEntity<String>> create(@RequestBody Mono<Feedback> feedback) {
-//        log.info("Received feedback: {}", feedback);
-//        return feedback.doOnNext(service::process)
-//                .map(f -> ResponseEntity.ok("OK"));
-//    }
 }

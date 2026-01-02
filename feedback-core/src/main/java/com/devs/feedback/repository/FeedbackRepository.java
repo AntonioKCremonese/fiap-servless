@@ -2,6 +2,7 @@ package com.devs.feedback.repository;
 
 import com.devs.feedback.model.Feedback;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
@@ -13,8 +14,10 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
+@Slf4j
 public class FeedbackRepository {
 
     private final DynamoDbClient dynamo;
@@ -53,28 +56,13 @@ public class FeedbackRepository {
 
             for (Map<String, AttributeValue> item : response.items()) {
                 Feedback feedback = new Feedback();
-                feedback.setId(item.get("id").s());
 
-                if (item.containsKey("nota")) {
-                    feedback.setNota(Integer.parseInt(item.get("nota").n()));
-                }
+                feedback.setId(getString(item, "id"));
+                feedback.setNota(getInt(item, "nota"));
+                feedback.setDataEnvio(getInstant(item, "dataEnvio"));
+                feedback.setUrgente(getBoolean(item, "urgente"));
 
-                if (item.containsKey("dataEnvio")) {
-                    feedback.setDataEnvio(Instant.parse(item.get("dataEnvio").s()));
-                }
-
-                if (item.containsKey("urgente")) {
-                    feedback.setUrgente(item.get("urgente").bool());
-                }
-
-                if (item.containsKey("payload")) {
-                    try {
-                        Feedback fullFeedback = mapper.readValue(item.get("payload").s(), Feedback.class);
-                        feedback.setDescricao(fullFeedback.getDescricao());
-                    } catch (Exception e) {
-                        // Se falhar, continua sem a descrição
-                    }
-                }
+                getPayload(item).ifPresent(feedback::setDescricao);
 
                 feedbacks.add(feedback);
             }
@@ -84,4 +72,37 @@ public class FeedbackRepository {
             throw new RuntimeException("Erro ao buscar feedbacks do DynamoDB", e);
         }
     }
+
+    private String getString(Map<String, AttributeValue> item, String key) {
+        return item.containsKey(key) ? item.get(key).s() : null;
+    }
+
+    private Integer getInt(Map<String, AttributeValue> item, String key) {
+        return item.containsKey(key) ? Integer.parseInt(item.get(key).n()) : null;
+    }
+
+    private Boolean getBoolean(Map<String, AttributeValue> item, String key) {
+        return item.containsKey(key) ? item.get(key).bool() : null;
+    }
+
+    private Instant getInstant(Map<String, AttributeValue> item, String key) {
+        return item.containsKey(key)
+                ? Instant.parse(item.get(key).s())
+                : null;
+    }
+
+    private Optional<String> getPayload(Map<String, AttributeValue> item) {
+        if (!item.containsKey("payload")) {
+            return Optional.empty();
+        }
+
+        try {
+            Feedback full = mapper.readValue(item.get("payload").s(), Feedback.class);
+            return Optional.ofNullable(full.getDescricao());
+        } catch (Exception e) {
+            log.warn("Erro ao desserializar payload do feedback", e);
+            return Optional.empty();
+        }
+    }
+
 }

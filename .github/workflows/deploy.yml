@@ -39,5 +39,13 @@ jobs:
       - name: SAM deploy
         run: |
           pip install aws-sam-cli
-          sam deploy --template-file template.yaml --stack-name feedback-stack \
-            --capabilities CAPABILITY_IAM --no-confirm-changeset --resolve-s3
+          sam deploy \
+            --template-file template.yaml \
+            --stack-name feedback-stack \
+            --capabilities CAPABILITY_IAM \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --resolve-s3 \
+            --parameter-overrides \
+              SesSourceEmail=${{ secrets.SES_SOURCE_EMAIL }} \
+              SesConfigurationSetName=${{ secrets.SES_CONFIG_SET_NAME }}

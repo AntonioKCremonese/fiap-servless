@@ -8,6 +8,15 @@ Globals:
     MemorySize: 512
     Timeout: 30
 
+Parameters:
+  SesSourceEmail:
+    Type: String
+    Description: Email verificado no SES para envio de alertas
+
+  SesConfigurationSetName:
+    Type: String
+    Default: my-first-configuration-set
+
 Resources:
 
   FeedbackHttpFunction:
@@ -45,7 +54,7 @@ Resources:
       Handler: com.devs.feedback.handler.SnsUrgencyHandler::handleRequest
       Environment:
         Variables:
-          SES_SOURCE_EMAIL: tonhuk10@gmail.com
+          SES_SOURCE_EMAIL: !Ref SesSourceEmail
       Events:
         UrgencyTopic:
           Type: SNS
@@ -59,8 +68,8 @@ Resources:
                 - ses:SendEmail
                 - ses:SendRawEmail
               Resource:
-                - arn:aws:ses:sa-east-1:722318517834:identity/tonhuk10@gmail.com
-                - arn:aws:ses:sa-east-1:722318517834:configuration-set/my-first-configuration-set
+                - !Sub arn:aws:ses:${AWS::Region}:${AWS::AccountId}:identity/${SesSourceEmail}
+                - !Sub arn:aws:ses:${AWS::Region}:${AWS::AccountId}:configuration-set/${SesConfigurationSetName}
 
   WeeklyReportFunction:
     Type: AWS::Serverless::Function
